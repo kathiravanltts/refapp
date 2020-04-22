@@ -1135,29 +1135,6 @@ var APP_com_metrological_app_myawesomeapp = (function () {
 	  return new app(appSettings)
 	};
 
-	let MenuConfig = {
-	  MAINMENU_x: 150,
-	  MAINMENU_y: 730,
-	  MAINMENU_ITEM_WIDTH: 200,
-	  MAINMENU_ITEM_HEIGHT: 40,
-	  MAINMENU_ITEM_XSPACE: 400,
-	  MAINMENU_ITEM_YSPACE: 0,
-	  MAINMENU_ITEM_TXT_X: 0,
-	  MAINMENU_ITEM_TXT_Y: 0,
-	  MAINMENU_ITEM_COLOR: 0xff0000ff,
-	  MAINMENU_LIST_TYPE: 'vertical',
-	  SUBMENU_LIST_X: 0,
-	  SUBMENU_LIST_Y: 0,
-	  LIST_BACKGROUND_WIDTH: 1920,
-	  LIST_BACKGROUND_HEIGHT: 70,
-	  MAINMENU_LISTITEM_LABEL_X: 20,
-	  MAINMENU_LISTITEM_LABEL_Y: 0,
-	  MAINMENU_LISTITEM_IMG_X: 0,
-	  MAINMENU_LISTITEM_IMG_Y: 0,
-	  MAINMENU_LISTITEM_IMG_WIDTH: 200,
-	  MAINMENU_LISTITEM_IMG_HEIGHT: 200
-	};
-
 	class ListItem extends Lightning.Component {
 	  static _template() {
 	    return {}
@@ -1213,6 +1190,33 @@ var APP_com_metrological_app_myawesomeapp = (function () {
 	  }
 	}
 
+	//VoD ListItem .
+	class VodListItem extends ListItem {
+	  static _template() {
+	    return {}
+	  }
+
+	  _init() {
+	    this.patch({
+	      rect: true,
+	      w: this.argument.ListItem.width,
+	      h: this.argument.ListItem.height,
+	      color: this.argument.ListItem.color,
+	      alpha: 0.8,
+	      Label: {
+	        x: this.argument.ListItem.Label_x,
+	        y: this.argument.ListItem.Label_y,
+	        text: { text: this.item.label, fontSize: 30 }
+	      },
+	      LabelTitle: {
+	        x: this.argument.ListItem.Title_Label_x,
+	        y: this.argument.ListItem.Title_Label_y,
+	        text: { text: this.item.data.refId, fontSize: 50 }
+	      }
+	    });
+	  }
+	}
+
 	class List extends Lightning.Component {
 	  static _template() {
 	    return {}
@@ -1227,11 +1231,11 @@ var APP_com_metrological_app_myawesomeapp = (function () {
 	  }
 
 	  set items(items) {
-	    let startX = MenuConfig.MAINMENU_x,
+	    let startX = 0,
 	      startY = 0;
-	    let xspace = MenuConfig.MAINMENU_ITEM_XSPACE,
-	      yspace = MenuConfig.MAINMENU_ITEM_YSPACE;
-	    let width = MenuConfig.MAINMENU_ITEM_WIDTH;
+	    let xspace = this.argument.ListItem.xspace,
+	      yspace = this.argument.ListItem.yspace;
+	    let width = this.argument.ListItem.width;
 
 	    this.children = items.map((item, index) => {
 	      return {
@@ -1273,12 +1277,35 @@ var APP_com_metrological_app_myawesomeapp = (function () {
 	  }
 	}
 
+	let MenuConfig = {
+	  MAINMENU_x: 150,
+	  MAINMENU_y: 730,
+	  MAINMENU_ITEM_WIDTH: 200,
+	  MAINMENU_ITEM_HEIGHT: 40,
+	  MAINMENU_ITEM_XSPACE: 400,
+	  MAINMENU_ITEM_YSPACE: 0,
+	  MAINMENU_ITEM_TXT_X: 0,
+	  MAINMENU_ITEM_TXT_Y: 0,
+	  MAINMENU_ITEM_COLOR: 0xff0000ff,
+	  MAINMENU_LIST_TYPE: 'vertical',
+	  SUBMENU_LIST_X: 0,
+	  SUBMENU_LIST_Y: 0,
+	  LIST_BACKGROUND_WIDTH: 1920,
+	  LIST_BACKGROUND_HEIGHT: 70,
+	  MAINMENU_LISTITEM_LABEL_X: 20,
+	  MAINMENU_LISTITEM_LABEL_Y: 0,
+	  MAINMENU_LISTITEM_IMG_X: 0,
+	  MAINMENU_LISTITEM_IMG_Y: 0,
+	  MAINMENU_LISTITEM_IMG_WIDTH: 200,
+	  MAINMENU_LISTITEM_IMG_HEIGHT: 200
+	};
+
 	function getBackground() {
 	  return {
 	    x: 0,
 	    y: 0,
-	    rect: true,
-	    color: 0xff000000,
+	    rect: false,
+	    color: 0xffffffff,
 	    w: MenuConfig.LIST_BACKGROUND_WIDTH,
 	    h: MenuConfig.LIST_BACKGROUND_HEIGHT
 	  }
@@ -1291,7 +1318,9 @@ var APP_com_metrological_app_myawesomeapp = (function () {
 	      height: MenuConfig.MAINMENU_ITEM_HEIGHT,
 	      color: MenuConfig.MAINMENU_ITEM_COLOR,
 	      Label_x: MenuConfig.MAINMENU_LISTITEM_LABEL_X,
-	      Label_y: MenuConfig.MAINMENU_LISTITEM_LABEL_Y
+	      Label_y: MenuConfig.MAINMENU_LISTITEM_LABEL_Y,
+	      xspace: 400,
+	      yspace: 0
 	    }
 	  };
 	  return {
@@ -1314,7 +1343,9 @@ var APP_com_metrological_app_myawesomeapp = (function () {
 	      img_x: MenuConfig.MAINMENU_LISTITEM_IMG_X,
 	      img_y: MenuConfig.MAINMENU_LISTITEM_IMG_Y,
 	      img_width: MenuConfig.MAINMENU_LISTITEM_IMG_HEIGHT,
-	      img_height: MenuConfig.MAINMENU_LISTITEM_IMG_WIDTH
+	      img_height: MenuConfig.MAINMENU_LISTITEM_IMG_WIDTH,
+	      xspace: 20,
+	      yspace: 0
 	    }
 	  };
 	  return {
@@ -1402,6 +1433,264 @@ var APP_com_metrological_app_myawesomeapp = (function () {
 	  }
 	}
 
+	class model$1 {
+	  constructor() {
+	    this.init();
+	    this.data = {};
+	    this.currrentChannel = '';
+	  }
+
+	  init() {
+	    fetch('./cache/demo/channelsV2.json')
+	      .then(response => {
+	        return response.json()
+	      })
+	      .then(data => {
+	        this.data = data;
+	      });
+	  }
+
+	  nextChannel() {
+	    let params = {
+	      openRequest: {
+	        type: 'main',
+	        locator: 'tune://pgmno=-1&frequency=302000000&modulation=16&symbol_rate=6875',
+	        refId: 'channel2'
+	      }
+	    };
+	    this.currrentChannel = 'channel 2';
+	    return params
+	  }
+
+	  previousChannel() {
+	    let params = {
+	      openRequest: {
+	        type: 'main',
+	        locator: 'tune://pgmno=-1&frequency=301000000&modulation=16&symbol_rate=6875',
+	        refId: 'channel1'
+	      }
+	    };
+	    this.currrentChannel = 'channel 1';
+	    return params
+	  }
+	}
+
+	let currentPlaying = {};
+
+	function startPlayback(params) {
+	  var requestOptions = {
+	    method: 'PUT',
+	    headers: {
+	      'Content-Type': 'application/json',
+	      Connection: 'keep-alive'
+	    },
+	    body: JSON.stringify(params)
+	  };
+
+	  currentPlaying = {
+	    closeRequest: {
+	      type: 'main',
+	      locator: params.openRequest.locator,
+	      refId: params.openRequest.refId,
+	      sessionId: ''
+	    }
+	  };
+
+	  return fetch('http://localhost:8080/vldms/sessionmgr/open', requestOptions)
+	    .then(response => {
+	      return response.json()
+	    })
+	    .then(data => {
+	      currentPlaying.closeRequest.sessionId = data.openStatus.sessionId;
+	      console.log(currentPlaying);
+	      return data
+	    })
+	}
+
+	let Config = {
+	  CHANNELBAR_X: 700,
+	  CHANNELBAR_Y: 900,
+	  CHANNELBAR_WIDTH: 500,
+	  CHANNELBAR_HEIGHT: 100,
+	  CHANNELBAR_LABEL_X: 150,
+	  CHANNELBAR_LABEL_Y: 30,
+	  CHANNELBAR_COLOR: 0xffff0000,
+	  FONT_SIZE: 30
+	};
+
+	class channelbar extends Lightning.Component {
+	  static _template() {
+	    return {
+	      Channelbar: {
+	        rect: true,
+	        x: Config.CHANNELBAR_X,
+	        y: Config.CHANNELBAR_Y,
+	        w: Config.CHANNELBAR_WIDTH,
+	        h: Config.CHANNELBAR_HEIGHT,
+	        color: Config.CHANNELBAR_COLOR,
+	        Ch: {
+	          x: Config.CHANNELBAR_LABEL_X,
+	          y: Config.CHANNELBAR_LABEL_Y,
+	          text: { text: 'Channel 1', fontSize: Config.FONT_SIZE }
+	        }
+	      }
+	    }
+	  }
+
+	  _construct() {
+	    this.model = new model$1();
+	  }
+
+	  _init() {
+	    this.patch({
+	      Txt: { x: 600, y: 520, text: { text: this.argument, fontSize: 30 } }
+	    });
+	    startPlayback(this.model.previousChannel());
+	  }
+
+	  _captureKey(evt) {
+	    if (evt.code === 'ArrowDown') {
+	      startPlayback(this.model.previousChannel());
+	      this.tag('Ch').text = this.model.currrentChannel;
+	    }
+	    if (evt.code === 'ArrowUp') {
+	      startPlayback(this.model.nextChannel());
+	      this.tag('Ch').text = this.model.currrentChannel;
+	    }
+	    if (evt.code === 'Enter') {
+	      this.signal('select', { item: { label: 'OnDemand', target: 'Menu' } });
+	    }
+	    return true
+	  }
+	}
+
+	class model$2 {
+	  getMenu() {
+	    return fetch('./cache/demo/movies.json')
+	      .then(response => {
+	        return response.json()
+	      })
+	      .then(data => {
+	        return data
+	      })
+	  }
+	}
+
+	let MenuConfig$1 = {
+	  LIST_X: 50,
+	  LIST_Y: 500,
+	  LIST_ITEM_WIDTH: 300,
+	  LIST_ITEM_HEIGHT: 160,
+	  LIST_ITEM_XSPACE: 20,
+	  LIST_ITEM_YSPACE: 0,
+	  LIST_ITEM_COLOR: 0xff0000ff,
+	  MAINMENU_LIST_TYPE: 'vertical',
+	  LIST_BACKGROUND_WIDTH: 1920,
+	  LIST_BACKGROUND_HEIGHT: 230,
+	  LIST_BACKGROUND_Y: 470,
+	  LIST_BACKGROUND_X: 0,
+	  LIST_BACKGROUND_COLOR: 0x22f00000,
+	  LISTITEM_LABEL_X: 80,
+	  LISTITEM_LABEL_Y: 100,
+	  LISTITEM_TITLE_LABEL_X: 80,
+	  LISTITEM_TITLE_LABEL_Y: 20,
+	  LIST_TITLE: 'All Movies',
+	  LIST_TITLE_X: 50,
+	  LIST_TITLE_Y: 430
+	};
+
+	function getBackground$1() {
+	  return {
+	    x: MenuConfig$1.LIST_BACKGROUND_X,
+	    y: MenuConfig$1.LIST_BACKGROUND_Y,
+	    rect: true,
+	    color: MenuConfig$1.LIST_BACKGROUND_COLOR,
+	    w: MenuConfig$1.LIST_BACKGROUND_WIDTH,
+	    h: MenuConfig$1.LIST_BACKGROUND_HEIGHT
+	  }
+	}
+
+	function getMainList$1() {
+	  let argument = {
+	    ListItem: {
+	      width: MenuConfig$1.LIST_ITEM_WIDTH,
+	      height: MenuConfig$1.LIST_ITEM_HEIGHT,
+	      color: MenuConfig$1.LIST_ITEM_COLOR,
+	      Label_x: MenuConfig$1.LISTITEM_LABEL_X,
+	      Label_y: MenuConfig$1.LISTITEM_LABEL_Y,
+	      xspace: MenuConfig$1.LIST_ITEM_XSPACE,
+	      yspace: MenuConfig$1.LIST_ITEM_YSPACE,
+	      Title_Label_x: MenuConfig$1.LISTITEM_TITLE_LABEL_X,
+	      Title_Label_y: MenuConfig$1.LISTITEM_TITLE_LABEL_Y
+	    }
+	  };
+	  return {
+	    x: MenuConfig$1.LIST_X,
+	    y: MenuConfig$1.LIST_Y,
+	    type: List,
+
+	    signals: { select: true },
+	    argument: argument
+	  }
+	}
+
+	class Movie extends Lightning.Component {
+	  static _template() {
+	    return {
+	      x: 0,
+	      y: 0,
+	      BackGround: getBackground$1(),
+	      MainList: getMainList$1(),
+	      Txt: {
+	        x: MenuConfig$1.LIST_TITLE_X,
+	        y: MenuConfig$1.LIST_TITLE_Y,
+	        text: { text: MenuConfig$1.LIST_TITLE, fontSize: 30 }
+	      }
+	    }
+	  }
+
+	  _construct(cont) {
+	    this.model = new model$2();
+	    this.model.data = {};
+	  }
+
+	  _init() {
+	    this.model.getMenu().then(data => {
+	      this.model.data = data;
+	      this.tag('MainList').ListItemsComponend = VodListItem;
+	      this.tag('MainList').items = this.model.data.map(i => ({ label: i.title, data: i }));
+	      this._setState('MainList');
+	    });
+	  }
+
+	  _handleUp() {}
+	  _handleDown() {}
+	  _handleBack() {
+	    console.log('movie js');
+	  }
+
+	  static _states() {
+	    return [
+	      class MainList extends this {
+	        _getFocused() {
+	          return this.tag('MainList')
+	        }
+	        select(item) {
+	          console.log(item.item.data);
+	          var body = {
+	            openRequest: {
+	              type: 'main',
+	              locator: item.item.data.locator,
+	              refId: item.item.data.refId
+	            }
+	          };
+	          startPlayback(body);
+	        }
+	      }
+	    ]
+	  }
+	}
+
 	class App extends Lightning.Component {
 	  static getFonts() {
 	    return [{ family: 'pixel', url: Utils.asset('../fonts/DejaVuSerif.ttf'), descriptor: {} }]
@@ -1417,7 +1706,7 @@ var APP_com_metrological_app_myawesomeapp = (function () {
 	        argument: 'App Page Under Construction. Please Press Enter key.'
 	      },
 	      Movie: {
-	        type: OnDemand,
+	        type: Movie,
 	        alpha: 0,
 	        signals: { select: true },
 	        argument: 'Movie Page Under Construction. Please Press Enter key.'
@@ -1427,12 +1716,26 @@ var APP_com_metrological_app_myawesomeapp = (function () {
 	        alpha: 0,
 	        signals: { select: true },
 	        argument: 'Setting Under Construction. Please Press Enter key.'
+	      },
+	      ChannelBar: {
+	        type: channelbar,
+	        alpha: 0,
+	        signals: { select: true },
+	        argument:
+	          'Please Press Up/Down arrow key for channel navigation.Press Enter ,The main menu will appear'
 	      }
 	    }
 	  }
 
 	  _setup() {
 	    this._setState('Menu');
+	  }
+
+	  _captureKey(evt) {
+	    if (evt.code === 'ArrowDown' || evt.code === 'ArrowUp') {
+	      this._setState('ChannelBar');
+	    }
+	    return false
 	  }
 
 	  static _states() {
@@ -1492,6 +1795,20 @@ var APP_com_metrological_app_myawesomeapp = (function () {
 	        }
 	        select({ item }) {
 	          console.log('Setting');
+	          this._setState(item.target);
+	        }
+	      },
+	      class ChannelBar extends this {
+	        $enter() {
+	          this.tag('ChannelBar').setSmooth('alpha', 1);
+	        }
+	        $exit() {
+	          this.tag('ChannelBar').setSmooth('alpha', 0);
+	        }
+	        _getFocused() {
+	          return this.tag('ChannelBar')
+	        }
+	        select({ item }) {
 	          this._setState(item.target);
 	        }
 	      }

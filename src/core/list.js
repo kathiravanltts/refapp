@@ -1,4 +1,3 @@
-import Config from '../mainMenu/config.js'
 import { Lightning } from 'wpe-lightning-sdk'
 
 export class ListItem extends Lightning.Component {
@@ -56,6 +55,33 @@ export class ImageListItem extends ListItem {
   }
 }
 
+//VoD ListItem .
+export class VodListItem extends ListItem {
+  static _template() {
+    return {}
+  }
+
+  _init() {
+    this.patch({
+      rect: true,
+      w: this.argument.ListItem.width,
+      h: this.argument.ListItem.height,
+      color: this.argument.ListItem.color,
+      alpha: 0.8,
+      Label: {
+        x: this.argument.ListItem.Label_x,
+        y: this.argument.ListItem.Label_y,
+        text: { text: this.item.label, fontSize: 30 }
+      },
+      LabelTitle: {
+        x: this.argument.ListItem.Title_Label_x,
+        y: this.argument.ListItem.Title_Label_y,
+        text: { text: this.item.data.refId, fontSize: 50 }
+      }
+    })
+  }
+}
+
 export class List extends Lightning.Component {
   static _template() {
     return {}
@@ -70,11 +96,11 @@ export class List extends Lightning.Component {
   }
 
   set items(items) {
-    let startX = Config.MAINMENU_x,
+    let startX = 0,
       startY = 0
-    let xspace = Config.MAINMENU_ITEM_XSPACE,
-      yspace = Config.MAINMENU_ITEM_YSPACE
-    let width = Config.MAINMENU_ITEM_WIDTH
+    let xspace = this.argument.ListItem.xspace,
+      yspace = this.argument.ListItem.yspace
+    let width = this.argument.ListItem.width
 
     this.children = items.map((item, index) => {
       return {
