@@ -1,8 +1,0 @@
-.vscode
-.idea
-package-lock.json
-node_modules
-/dist
-package.lock
-.DS_Store
-__snapshots__
