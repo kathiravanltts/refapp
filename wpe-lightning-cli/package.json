@@ -1,0 +1,87 @@
+{
+  "_from": "github:WebPlatformForEmbedded/Lightning-CLI",
+  "_id": "wpe-lightning-cli@1.5.0",
+  "_inBundle": false,
+  "_integrity": "",
+  "_location": "/wpe-lightning-cli",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "git",
+    "raw": "WebPlatformForEmbedded/Lightning-CLI",
+    "rawSpec": "WebPlatformForEmbedded/Lightning-CLI",
+    "saveSpec": "github:WebPlatformForEmbedded/Lightning-CLI",
+    "fetchSpec": null,
+    "gitCommittish": null
+  },
+  "_requiredBy": [
+    "#USER"
+  ],
+  "_resolved": "github:WebPlatformForEmbedded/Lightning-CLI#29825f8e878dcac0e92db9e1c8aee7e1bd450bde",
+  "_spec": "WebPlatformForEmbedded/Lightning-CLI",
+  "_where": "/home/kathir/tst/refapp",
+  "author": {
+    "name": "Michiel van der Geest",
+    "email": "m.van.der.geest@metrological.com"
+  },
+  "bin": {
+    "lightning": "bin/index.js",
+    "lng": "bin/index.js"
+  },
+  "bundleDependencies": false,
+  "dependencies": {
+    "@babel/core": "^7.7.7",
+    "@babel/plugin-transform-parameters": "^7.7.7",
+    "@babel/plugin-transform-spread": "^7.7.4",
+    "@babel/preset-env": "^7.7.7",
+    "@rollup/plugin-alias": "^3.0.1",
+    "axios": "^0.19.0",
+    "chalk": "^3.0.0",
+    "commander": "^4.0.1",
+    "core-js": "^2.6.11",
+    "didyoumean2": "^4.0.0",
+    "execa": "^3.4.0",
+    "form-data": "^3.0.0",
+    "fs-extra": "^8.1.0",
+    "http-server": "^0.12.0",
+    "inquirer": "^7.0.0",
+    "is-online": "^8.2.1",
+    "ora": "^4.0.3",
+    "replace-in-file": "^4.2.0",
+    "rollup": "^1.27.13",
+    "rollup-plugin-babel": "^4.3.3",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "semver": "^7.1.1",
+    "shelljs": "^0.8.3",
+    "targz": "^1.0.1",
+    "watch": "^1.0.2"
+  },
+  "deprecated": false,
+  "description": "## Tooling for Lightning development",
+  "devDependencies": {
+    "babel-eslint": "^10.0.3",
+    "eslint": "^6.7.1",
+    "eslint-config-prettier": "^6.7.0",
+    "eslint-plugin-prettier": "^3.1.1",
+    "husky": "^3.1.0",
+    "lint-staged": "^9.4.3",
+    "prettier": "^1.19.1"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "license": "Apache-2",
+  "lint-staged": {
+    "*.js": [
+      "eslint --fix",
+      "git add"
+    ]
+  },
+  "name": "wpe-lightning-cli",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "version": "1.5.0"
+}

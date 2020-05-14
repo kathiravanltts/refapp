@@ -1,0 +1,7 @@
+{
+  "name": "{$appId}",
+  "description": "{$appName}",
+  "dependencies": {
+    "wpe-lightning-sdk": "WebPlatformForEmbedded/Lightning-SDK"
+  }
+}
