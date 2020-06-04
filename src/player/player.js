@@ -50,7 +50,6 @@ export function stopCurrentPlayback() {
     },
     body: JSON.stringify(currentPlaying)
   }
-
   let url = ip + '/vldms/sessionmgr/close'
   return fetch(url, requestOptions)
     .then(response => {
