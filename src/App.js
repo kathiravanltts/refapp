@@ -94,7 +94,6 @@ export default class App extends Lightning.Component {
           return this.tag('App')
         }
         select({ item }) {
-          console.log('App')
           this._setState(item.target)
         }
       },
@@ -123,7 +122,6 @@ export default class App extends Lightning.Component {
           return this.tag('Setting')
         }
         select({ item }) {
-          console.log('Setting')
           this._setState(item.target)
         }
       },

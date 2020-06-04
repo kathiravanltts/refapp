@@ -51,9 +51,7 @@ export default class Movie extends Lightning.Component {
   _handleDown() {
     this._setState('MainList')
   }
-  _handleBack() {
-    console.log('movie js')
-  }
+  _handleBack() {}
 
   static _states() {
     return [
@@ -62,7 +60,6 @@ export default class Movie extends Lightning.Component {
           return this.tag('MainList')
         }
         select(item) {
-          console.log(item.item.data)
           var body = {
             openRequest: {
               type: 'main',
@@ -78,7 +75,6 @@ export default class Movie extends Lightning.Component {
           return this.tag('RecommendedList')
         }
         select(item) {
-          console.log(item.item.data)
           var body = {
             openRequest: {
               type: 'main',

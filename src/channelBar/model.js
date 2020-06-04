@@ -42,7 +42,6 @@ export default class model {
     if (this.channelIndex < this.data.length - 1) {
       this.channelIndex++
     } else {
-      console.log('nex')
       return false
     }
 
@@ -59,7 +58,6 @@ export default class model {
     if (this.channelIndex >= 1) {
       this.channelIndex--
     } else {
-      console.log('pre')
       return false
     }
     this.currrentChannel = this.data[this.channelIndex].channelId
