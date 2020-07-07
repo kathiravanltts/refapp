@@ -1,10 +1,7 @@
 import { Lightning, Utils } from 'wpe-lightning-sdk'
-import Menu from './mainMenu/menu.js'
-import OnDemand from './OnDemand/ondemand.js'
-import ChannelBar_ from './channelBar/channelbar.js'
-import Movie from './movie/movie.js'
-import { setPlayerEndpoint, startPlayback } from './player/player.js'
+import Notification from './Notification/notification.js'
 import Model from './AppModel.js'
+import Appllication from './Appllication.js'
 
 export default class App extends Lightning.Component {
   static getFonts() {
@@ -13,30 +10,24 @@ export default class App extends Lightning.Component {
 
   static _template() {
     return {
-      Menu: { type: Menu, alpha: 0, signals: { select: true } },
-      App: {
-        type: OnDemand,
+      Notification: {
+        type: Notification,
         alpha: 0,
         signals: { select: true },
-        argument: 'App Page Under Construction. Please Press Enter key.'
+        argument: {}
       },
-      Movie: {
-        type: Movie,
-        alpha: 0,
+      Appllication: {
+        color: 0xffff4512,
+        type: Appllication,
+        alpha: 1,
         signals: { select: true },
-        argument: 'Movie Page Under Construction. Please Press Enter key.'
-      },
-      Setting: {
-        type: OnDemand,
-        alpha: 0,
-        signals: { select: true },
-        argument: 'Setting Under Construction. Please Press Enter key.'
+        argument: {}
       }
     }
   }
 
   _setup() {
-    this._setState('Menu')
+    this._setState('Appllication')
   }
 
   _construct() {
@@ -44,99 +35,38 @@ export default class App extends Lightning.Component {
     this.model.data = {}
   }
 
-  _init() {
-    this.model.getAppModel().then(data => {
-      this.model.data = data
-      setPlayerEndpoint(data)
-      this.patch({
-        ChannelBar: {
-          type: ChannelBar_,
-          alpha: 0,
-          signals: { select: true },
-          argument:
-            'Please Press Up/Down arrow key for channel navigation.Press Enter ,The main menu will appear'
-        }
-      })
-    })
-  }
+  _init() {}
 
   _captureKey(evt) {
-    if ((evt.code === 'ArrowDown' || evt.code === 'ArrowUp') && this._stateIndex === 1) {
-      this._setState('ChannelBar')
-    }
     return false
   }
 
   static _states() {
     return [
-      class Menu extends this {
+      class Notification extends this {
         $enter() {
-          this.tag('Menu').setSmooth('alpha', 1)
+          this.tag('Notification').setSmooth('alpha', 1)
         }
         $exit() {
-          this.tag('Menu').setSmooth('alpha', 0)
+          this.tag('Notification').setSmooth('alpha', 0)
         }
         _getFocused() {
-          return this.tag('Menu')
+          return this.tag('Notification')
         }
         select({ item }) {
-          this._setState(item.target)
+          this.tag('Appllication').argument['evt'] = item.evt
+          this._setState('Appllication')
         }
       },
-      class App extends this {
-        $enter() {
-          this.tag('App').setSmooth('alpha', 1)
-        }
-        $exit() {
-          this.tag('App').setSmooth('alpha', 0)
-        }
+      class Appllication extends this {
+        $enter() {}
+        $exit() {}
         _getFocused() {
-          return this.tag('App')
+          return this.tag('Appllication')
         }
         select({ item }) {
-          this._setState(item.target)
-        }
-      },
-      class Movie extends this {
-        $enter() {
-          this.tag('Movie').setSmooth('alpha', 1)
-        }
-        $exit() {
-          this.tag('Movie').setSmooth('alpha', 0)
-        }
-        _getFocused() {
-          return this.tag('Movie')
-        }
-        select({ item }) {
-          this._setState(item.target)
-        }
-      },
-      class Setting extends this {
-        $enter() {
-          this.tag('Setting').setSmooth('alpha', 1)
-        }
-        $exit() {
-          this.tag('Setting').setSmooth('alpha', 0)
-        }
-        _getFocused() {
-          return this.tag('Setting')
-        }
-        select({ item }) {
-          this._setState(item.target)
-        }
-      },
-      class ChannelBar extends this {
-        $enter() {
-          this.tag('ChannelBar').setSmooth('alpha', 1)
-        }
-        $exit() {
-          this.tag('ChannelBar').setSmooth('alpha', 0)
-        }
-        _getFocused() {
-          return this.tag('ChannelBar')
-        }
-        select({ item }) {
-          this._setState(item.target)
+          this.tag('Notification').argument['evt'] = item
+          this._setState(item.type)
         }
       }
     ]

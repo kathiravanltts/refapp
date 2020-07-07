@@ -1,3 +1,5 @@
+import jsondata from '../cache/demo/channelsV2.json'
+
 export default class model {
   constructor() {
     this.init()
@@ -7,13 +9,17 @@ export default class model {
   }
 
   init() {
-    fetch('./cache/demo/channelsV2.json')
-      .then(response => {
-        return response.json()
-      })
-      .then(data => {
-        this.data = data
-      })
+    if (window.location.protocol != 'file:') {
+      fetch('./cache/demo/channelsV2.json')
+        .then(response => {
+          return response.json()
+        })
+        .then(data => {
+          this.data = data
+        })
+    } else {
+      this.data = jsondata
+    }
   }
 
   getMetaData() {
@@ -36,6 +42,10 @@ export default class model {
       .then(data => {
         this.data = data
       })
+  }
+
+  loadChannel(data) {
+    this.data = data
   }
 
   nextChannel() {

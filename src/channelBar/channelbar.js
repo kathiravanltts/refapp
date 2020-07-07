@@ -2,6 +2,7 @@ import { Lightning } from 'wpe-lightning-sdk'
 import Model from './model.js'
 import { startPlayback, stopCurrentPlayback } from './../player/player.js'
 import Config from './config.js'
+import jsondata from '../cache/demo/channelsV2.json'
 
 export default class channelbar extends Lightning.Component {
   static _template() {
@@ -28,12 +29,17 @@ export default class channelbar extends Lightning.Component {
 
   _init() {
     this.patch({
-      Txt: { x: 600, y: 520, text: { text: this.argument, fontSize: 30 } }
+      Txt: { x: 600, y: 520, text: { text: this.argument.Description, fontSize: 30 } }
     })
 
-    this.model.getChannel().then(() => {
+    if (window.location.protocol != 'file:') {
+      this.model.getChannel().then(() => {
+        startPlayback(this.model.defaultChennal())
+      })
+    } else {
+      this.model.loadChannel(jsondata)
       startPlayback(this.model.defaultChennal())
-    })
+    }
   }
 
   _captureKey(evt) {
@@ -50,6 +56,7 @@ export default class channelbar extends Lightning.Component {
     if (evt.code === 'Enter') {
       this.signal('select', { item: { label: 'OnDemand', target: 'Menu' } })
     }
+
     return true
   }
 }

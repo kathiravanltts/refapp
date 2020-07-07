@@ -27,14 +27,17 @@ export function getMainList() {
       fontSize: Config.LIST_RECOMMENDED_FONTSIZE,
       border: Config.LISTITEM_BORDER,
       focusItem: Config.LISTITEM_FOCUS,
-      image_path: Config.LISTITEM_POSTER_PATH
+      image_path:
+        window.location.protocol != 'file:'
+          ? Config.LISTITEM_POSTER_PATH
+          : Config.LISTITEM_POSTER_SEVRER_URL
     }
   }
   return {
     x: Config.LIST_X,
     y: Config.LIST_Y,
     type: List,
-
+    alpha: 1,
     signals: { select: true },
     argument: argument
   }
@@ -55,13 +58,17 @@ export function getRecommendedList() {
       fontSize: Config.LIST_RECOMMENDED_FONTSIZE,
       border: Config.LISTITEM_BORDER,
       focusItem: Config.LISTITEM_FOCUS,
-      image_path: Config.LISTITEM_POSTER_PATH
+      image_path:
+        window.location.protocol != 'file:'
+          ? Config.LISTITEM_POSTER_PATH
+          : Config.LISTITEM_POSTER_SEVRER_URL
     }
   }
   return {
     x: Config.LIST_RECOMMENDED_X,
     y: Config.LIST_RECOMMENDED_Y,
     type: List,
+    alpha: 1,
     signals: { select: true },
     argument: argument
   }

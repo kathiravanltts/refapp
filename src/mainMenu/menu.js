@@ -2,6 +2,7 @@ import { Lightning, Utils } from 'wpe-lightning-sdk'
 import { ListItem, ImageListItem } from './../core/list.js'
 import Model from './model.js'
 import { getBackground, getMainList } from './view.js'
+import menudata from '../cache/menu.json'
 
 export default class Menu extends Lightning.Component {
   static _template() {
@@ -18,13 +19,21 @@ export default class Menu extends Lightning.Component {
     this.model.data = {}
   }
 
+  modelUpdate(data) {
+    this.model.data = data
+    this.tag('MainList').ListItemsComponend = ListItem
+    this.tag('MainList').items = data.map(i => ({ label: i.title }))
+    this._setState('MainList')
+  }
+
   _init() {
-    this.model.getMenu().then(data => {
-      this.model.data = data
-      this.tag('MainList').ListItemsComponend = ListItem
-      this.tag('MainList').items = data.map(i => ({ label: i.title }))
-      this._setState('MainList')
-    })
+    if (window.location.protocol != 'file:') {
+      this.model.getMenu().then(data => {
+        this.modelUpdate(data)
+      })
+    } else {
+      this.modelUpdate(menudata)
+    }
   }
 
   _handleUp() {

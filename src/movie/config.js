@@ -37,7 +37,8 @@ let MenuConfig = {
   LISTITEM_FOCUS: 5,
   LISTITEM_BORDER: 10,
   LIST_RECOMMENDED_FONTSIZE: 25,
-  LISTITEM_POSTER_PATH: './img/movies/'
+  LISTITEM_POSTER_PATH: '../img/movies/',
+  LISTITEM_POSTER_SEVRER_URL: 'http://127.0.0.1:8080/static/img/movies/'
 }
 
 export default MenuConfig
