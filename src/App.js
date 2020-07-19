@@ -5,6 +5,7 @@ import ChannelBar_ from './channelBar/channelbar.js'
 import Movie from './movie/movie.js'
 import { setPlayerEndpoint, startPlayback } from './player/player.js'
 import Model from './AppModel.js'
+import TrickMode from './trickMode/trickmode.js'
 
 export default class App extends Lightning.Component {
   static getFonts() {
@@ -18,19 +19,25 @@ export default class App extends Lightning.Component {
         type: OnDemand,
         alpha: 0,
         signals: { select: true },
-        argument: 'App Page Under Construction. Please Press Enter key.'
+        argument: 'App Page Under Construction. Please Press Back key.'
       },
       Movie: {
         type: Movie,
         alpha: 0,
         signals: { select: true },
-        argument: 'Movie Page Under Construction. Please Press Enter key.'
+        argument: 'Movie Page Under Construction. Please Press Back key.'
       },
       Setting: {
         type: OnDemand,
         alpha: 0,
         signals: { select: true },
-        argument: 'Setting Under Construction. Please Press Enter key.'
+        argument: 'Setting Under Construction. Please Press Back key.'
+      },
+      TrickMode: {
+        type: TrickMode,
+        alpha: 0,
+        signals: { select: true },
+        argument: 'TrickMode Under Construction. Please Press Back key.'
       }
     }
   }
@@ -53,8 +60,7 @@ export default class App extends Lightning.Component {
           type: ChannelBar_,
           alpha: 0,
           signals: { select: true },
-          argument:
-            'Please Press Up/Down arrow key for channel navigation.Press Enter ,The main menu will appear'
+          argument: ''
         }
       })
     })
@@ -71,13 +77,13 @@ export default class App extends Lightning.Component {
     return [
       class Menu extends this {
         $enter() {
-          this.tag('Menu').setSmooth('alpha', 1)
+          this.tag(this._state.name).setSmooth('alpha', 1)
         }
         $exit() {
-          this.tag('Menu').setSmooth('alpha', 0)
+          this.tag(this._state.name).setSmooth('alpha', 0)
         }
         _getFocused() {
-          return this.tag('Menu')
+          return this.tag(this._state.name)
         }
         select({ item }) {
           this._setState(item.target)
@@ -99,13 +105,13 @@ export default class App extends Lightning.Component {
       },
       class Movie extends this {
         $enter() {
-          this.tag('Movie').setSmooth('alpha', 1)
+          this.tag(this._state.name).setSmooth('alpha', 1)
         }
         $exit() {
-          this.tag('Movie').setSmooth('alpha', 0)
+          this.tag(this._state.name).setSmooth('alpha', 0)
         }
         _getFocused() {
-          return this.tag('Movie')
+          return this.tag(this._state.name)
         }
         select({ item }) {
           this._setState(item.target)
@@ -113,13 +119,13 @@ export default class App extends Lightning.Component {
       },
       class Setting extends this {
         $enter() {
-          this.tag('Setting').setSmooth('alpha', 1)
+          this.tag(this._state.name).setSmooth('alpha', 1)
         }
         $exit() {
-          this.tag('Setting').setSmooth('alpha', 0)
+          this.tag(this._state.name).setSmooth('alpha', 0)
         }
         _getFocused() {
-          return this.tag('Setting')
+          return this.tag(this._state.name)
         }
         select({ item }) {
           this._setState(item.target)
@@ -127,13 +133,27 @@ export default class App extends Lightning.Component {
       },
       class ChannelBar extends this {
         $enter() {
-          this.tag('ChannelBar').setSmooth('alpha', 1)
+          this.tag(this._state.name).setSmooth('alpha', 1)
         }
         $exit() {
-          this.tag('ChannelBar').setSmooth('alpha', 0)
+          this.tag(this._state.name).setSmooth('alpha', 0)
         }
         _getFocused() {
-          return this.tag('ChannelBar')
+          return this.tag(this._state.name)
+        }
+        select({ item }) {
+          this._setState(item.target)
+        }
+      },
+      class TrickMode extends this {
+        $enter() {
+          this.tag(this._state.name).setSmooth('alpha', 1)
+        }
+        $exit() {
+          this.tag(this._state.name).setSmooth('alpha', 0)
+        }
+        _getFocused() {
+          return this.tag(this._state.name)
         }
         select({ item }) {
           this._setState(item.target)
