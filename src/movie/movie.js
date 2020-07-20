@@ -69,8 +69,7 @@ export default class Movie extends Lightning.Component {
               refId: item.item.data.refId
             }
           }
-          console.log('MainList')
-          // startPlayback(body)
+          startPlayback(body)
           this.signal('select', { item: { label: 'Movie', target: 'TrickMode' } })
         }
       },
@@ -86,8 +85,7 @@ export default class Movie extends Lightning.Component {
               refId: item.item.data.refId
             }
           }
-          console.log('RecommendedList')
-          // startPlayback(body)
+          startPlayback(body)
           this.signal('select', { item: { label: 'Movie', target: 'TrickMode' } })
         }
       }
