@@ -47,7 +47,8 @@ export default class channelbar extends Lightning.Component {
       metadata != false ? startPlayback(metadata) : ''
       this.tag('Ch').text = this.model.currrentChannel
     }
-    if (evt.code === 'Enter') {
+    console.log(evt.code)
+    if (evt.code === 'Backspace') {
       this.signal('select', { item: { label: 'OnDemand', target: 'Menu' } })
     }
     return true
