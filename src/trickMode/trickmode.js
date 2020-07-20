@@ -1,6 +1,6 @@
 import { Lightning } from 'wpe-lightning-sdk'
 
-export default class OnDemand extends Lightning.Component {
+export default class trickMode extends Lightning.Component {
   static _template() {
     return {}
   }
@@ -15,7 +15,7 @@ export default class OnDemand extends Lightning.Component {
 
   _handleUp() {}
   _handleBack() {
-    this.signal('select', { item: { label: 'OnDemand', target: 'Menu' } })
+    this.signal('select', { item: { label: 'trickMode', target: 'Movie' } })
   }
 
   _handleEnter() {}
