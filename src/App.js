@@ -62,7 +62,7 @@ export default class App extends Lightning.Component {
     )
   }
 
-  async _init() {
+  async _init() {    
     this._setState('Splash')
     const testIncreaseSplashVisibility = new Promise((resolve, reject) => {
       setTimeout(() => resolve(), 2000)

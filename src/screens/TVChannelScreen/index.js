@@ -18,11 +18,14 @@
  */
 import { Lightning, Utils } from '@lightningjs/sdk'
 import theme from '@/themes/default'
+import * as player  from '@/services/player/'
 import commonConstants from '@/constants/default'
 import constants from './constants'
-import ChannelsList from '@/components/ChannelsList'
+import { channelsServiceInit, getChannel } from '@/services/ChannelsService'
+import TVChannelScreenList from './components/TVChannelScreenList'
+import BaseScreen from '../BaseScreen'
 
-export default class TVChannelScreen extends Lightning.Component {
+export default class TVChannelScreen extends BaseScreen {
   static _template() {
     return {
       ChannelListContainer: {
@@ -48,20 +51,26 @@ export default class TVChannelScreen extends Lightning.Component {
         h: constants.CHLIST_TITLE_BH,
         y: constants.CHLIST_TITLE_BT,
         color: constants.CHLIST_TITLE_BC
-      },
-      List:{
-        type: ChannelsList,
-        zindex: 2
+      },     
+      Lists: {
+        x: 0,
+        y: 60
       }
     }
   }
 
   _handleUp() {
+    console.log("handle up");
 	 // TODO
   }
 
   _handleDown() {
+    console.log("handle Down");
 	  // TODO
+  }
+  
+  _getFocused() {
+    return this.activeList
   }
 
   _handleLeft() {
@@ -73,6 +82,7 @@ export default class TVChannelScreen extends Lightning.Component {
   }
 
   _handleKey(key) {
+    console.log('_handleKey');
     if (key.code === 'Backspace') {
       navigateBackward()
       return true
@@ -81,22 +91,68 @@ export default class TVChannelScreen extends Lightning.Component {
   }
 
   _handleEnter() {
+    console.log("handleEnter..");
+    console.log(this.tag('Lists').children[0].activeItem._item);
+    this._play(this.tag('Lists').children[0].activeItem._item)
     // TODO
-    if (selectedChannel) {
-      this.signal('channelChanged', { selectedChannel })
-    }
+    // if (selectedChannel) {
+      // this.signal('channelChanged', { selectedChannel })
+    // }
   }
   
   _focus() {
     // TODO
-    channelNumber = ChannelNumber.currentIndex;
+    // channelNumber = ChannelNumber.currentIndex;
   }
 
   updateView() {
     // TODO
   }
 
+  async update(params) {
+
+  }
+
+  // async animate() {
+    
+  // }
+
+  // async show() {
+    
+  // }
+
+  async _play(entry) {    
+    console.log(entry);
+    await player.playQAM(entry)
+  }
+
   async _init() {
+
+    const channels = await channelsServiceInit();  
+    let ch=[];
+    for (let _index = 0; _index < channels.length; _index++) {
+      channels[_index].label= channels[_index].channelId
+    }
+    
+    let obj = {
+             type:TVChannelScreenList,
+             itemSize: { w: 400, h: 50 },
+             label: "",
+             items: channels,
+             y: 50,
+             x:70
+    };
+    ch.push(obj);
+    this._index = 0
+    this.tag('Lists').children = ch;
+  }
+
   
+  get lists() {
+    return this.tag('Lists').children
+  }
+
+  get activeList() {
+    return this.lists[this._index]
   }
 }

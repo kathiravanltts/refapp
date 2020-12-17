@@ -38,12 +38,15 @@ export default class List extends Lightning.Component {
   }
 
   _handleLeft() {
+    console.log("_handleLeft List")
     if (this._index > 0) {
       this.setIndex(this._index - 1)
     }
   }
 
   _handleRight() {
+    console.log("_handleRight List")
+
     if (this._index < this.items.length - 1) {
       this.setIndex(this._index + 1)
     }
@@ -117,4 +120,6 @@ export default class List extends Lightning.Component {
   _getVisibleItemsOnScreen() {
     return Math.floor(1500 / (this._itemSize.w + 50))
   }
+
+  
 }
