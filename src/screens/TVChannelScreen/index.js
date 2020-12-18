@@ -24,6 +24,7 @@ import constants from './constants'
 import { channelsServiceInit, getChannel } from '@/services/ChannelsService'
 import TVChannelScreenList from './components/TVChannelScreenList'
 import BaseScreen from '../BaseScreen'
+import { getActiveScreen, navigateForward, navigateBackward, navigate } from './../../lib/Router'
 
 export default class TVChannelScreen extends BaseScreen {
   static _template() {
