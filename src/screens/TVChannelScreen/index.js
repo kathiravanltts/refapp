@@ -55,8 +55,7 @@ export default class TVChannelScreen extends BaseScreen {
           fontSize: constants.CHLIST_TITLE_FONTSIZE,
           textAlign: 'center'
         }
-      },
-     
+      },     
       ChannelListTB: {
         rect: true,
         w: constants.CHLIST_CONTAINER_WIDTH,
@@ -67,25 +66,11 @@ export default class TVChannelScreen extends BaseScreen {
     }
   }
 
-  _handleUp() {
-	 // TODO
-  }
-
-  _handleDown() {
-	  // TODO
-  }
   
   _getFocused() {
     return this.activeList
   }
 
-  _handleLeft() {
-	  // TODO
-  }
-
-  _handleRight() {
-	  // TODO
-  }
 
   _handleKey(key) {
     if (key.code === 'Backspace') {
@@ -103,18 +88,6 @@ export default class TVChannelScreen extends BaseScreen {
     // }
   }
   
-  _focus() {
-    // TODO
-    // channelNumber = ChannelNumber.currentIndex;
-  }
-
-  updateView() {
-    // TODO
-  }
-
-  async update(params) {
-
-  }
 
   async _play(entry) {    
     await player.playQAM(entry)

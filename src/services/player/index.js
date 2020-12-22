@@ -30,7 +30,6 @@ let needToStopCurrentPlayer = false
 
 function init(config) {
    config.endpoint = 'http://' + window.location.host;
-   config.endpoint = 'http://127.0.0.1:8080';
 
   return Promise.all([QAMPlayer.setUpPlayer(config), IPPlayer.setUpPlayer(config)])
 }
