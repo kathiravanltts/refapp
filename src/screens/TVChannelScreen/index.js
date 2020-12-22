@@ -44,7 +44,7 @@ export default class TVChannelScreen extends BaseScreen {
         rect: true,
         color: constants.CHLIST_CONTAINER_COLOR,
         w: constants.CHLIST_CONTAINER_WIDTH,
-        h: 100,
+        h: constants.CHLIST_CONTAINER_BG_HEIGHT,
       }, 
       ChannelListTitle: {
         w: constants.CHLIST_CONTAINER_WIDTH,
@@ -116,14 +116,6 @@ export default class TVChannelScreen extends BaseScreen {
 
   }
 
-  // async animate() {
-    
-  // }
-
-  // async show() {
-    
-  // }
-
   async _play(entry) {    
     await player.playQAM(entry)
   }
@@ -131,22 +123,23 @@ export default class TVChannelScreen extends BaseScreen {
   async _init() {
 
     const channels = await channelsServiceInit();  
-    let ch=[];
+    let channelList = [];
+
     for (let _index = 0; _index < channels.length; _index++) {
       channels[_index].label= channels[_index].channelId
     }
     
     let obj = {
              type:TVChannelScreenList,
-             itemSize: { w: 400, h: 50 },
+             itemSize: { w: constants.LIST_ITEM_WIDTH, h: constants.LIST_ITEM_HEIGHT },
              label: "",
              items: channels,
-             y: 50,
-             x:70
+             x:constants.LIST_X,
+             y: constants.LIST_Y
     };
-    ch.push(obj);
+    channelList.push(obj);
     this._index = 0
-    this.tag('Lists').children = ch;
+    this.tag('Lists').children = channelList;
   }
 
   
