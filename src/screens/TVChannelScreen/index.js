@@ -36,6 +36,16 @@ export default class TVChannelScreen extends BaseScreen {
         color: constants.CHLIST_CONTAINER_COLOR,
         alpha: 0.8
       },
+      Lists: {
+        x: 0,
+        y: 60
+      },
+      ChannelListTitleBg: {
+        rect: true,
+        color: constants.CHLIST_CONTAINER_COLOR,
+        w: constants.CHLIST_CONTAINER_WIDTH,
+        h: 100,
+      }, 
       ChannelListTitle: {
         w: constants.CHLIST_CONTAINER_WIDTH,
         h: constants.CHLIST_TITLE_HEIGHT,
@@ -46,27 +56,22 @@ export default class TVChannelScreen extends BaseScreen {
           textAlign: 'center'
         }
       },
+     
       ChannelListTB: {
         rect: true,
         w: constants.CHLIST_CONTAINER_WIDTH,
         h: constants.CHLIST_TITLE_BH,
         y: constants.CHLIST_TITLE_BT,
         color: constants.CHLIST_TITLE_BC
-      },     
-      Lists: {
-        x: 0,
-        y: 60
       }
     }
   }
 
   _handleUp() {
-    console.log("handle up");
 	 // TODO
   }
 
   _handleDown() {
-    console.log("handle Down");
 	  // TODO
   }
   
@@ -83,7 +88,6 @@ export default class TVChannelScreen extends BaseScreen {
   }
 
   _handleKey(key) {
-    console.log('_handleKey');
     if (key.code === 'Backspace') {
       navigateBackward()
       return true
@@ -92,8 +96,6 @@ export default class TVChannelScreen extends BaseScreen {
   }
 
   _handleEnter() {
-    console.log("handleEnter..");
-    console.log(this.tag('Lists').children[0].activeItem._item);
     this._play(this.tag('Lists').children[0].activeItem._item)
     // TODO
     // if (selectedChannel) {
@@ -123,7 +125,6 @@ export default class TVChannelScreen extends BaseScreen {
   // }
 
   async _play(entry) {    
-    console.log(entry);
     await player.playQAM(entry)
   }
 
