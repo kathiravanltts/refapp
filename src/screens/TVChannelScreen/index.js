@@ -62,6 +62,32 @@ export default class TVChannelScreen extends BaseScreen {
         h: constants.CHLIST_TITLE_BH,
         y: constants.CHLIST_TITLE_BT,
         color: constants.CHLIST_TITLE_BC
+      },
+      ChannelInfo: {
+        rect: true,
+        color: constants.CHLIST_CONTAINER_COLOR,
+        alpha:0.9,
+        w: 900,
+        h: 150,
+        x:800,
+        y:800,
+        visible:false,
+        RefIdTxt: {   
+          x:20,  
+          y:10,
+          text: {
+            fontSize: constants.CHLIST_INFO_FONTSIZE,           
+          }
+        },
+        LocatorTxt: {   
+          x:20,
+          y:40,    
+          w:900,
+          text: {
+            fontSize: constants.CHLIST_INFO_FONTSIZE,
+            wordWrap:true
+          }
+        }
       }
     }
   }
@@ -81,7 +107,15 @@ export default class TVChannelScreen extends BaseScreen {
   }
 
   _handleEnter() {
-    this._play(this.tag('Lists').children[0].activeItem._item)
+    let selectedItem = this.tag('Lists').children[0].activeItem._item
+    this._play(selectedItem)
+    this.tag('ChannelInfo').visible =true;
+    this.tag('RefIdTxt').text="channelId : "+selectedItem.channelId
+    this.tag('LocatorTxt').text="locator : "+selectedItem.locator
+    let timer = setTimeout(function(ref){
+      ref.tag('ChannelInfo').visible =false;
+      clearTimeout(timer);
+    },4000,this)
     // TODO
     // if (selectedChannel) {
       // this.signal('channelChanged', { selectedChannel })
@@ -101,6 +135,7 @@ export default class TVChannelScreen extends BaseScreen {
     for (let _index = 0; _index < channels.length; _index++) {
       channels[_index].label= channels[_index].channelId
     }
+    
     
     let obj = {
              type:TVChannelScreenList,

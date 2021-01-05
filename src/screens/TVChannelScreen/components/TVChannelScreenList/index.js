@@ -45,7 +45,7 @@ export default class TVChannelScreenList extends List {
         type: ItemWrapper,
         construct: TVChannelScreenItem,
         y: index * (this._itemSize.h + constants.ITEMS_CAP),
-        size: this._itemSize,
+        size: this._itemSize,    
         item: item
       }
     })
