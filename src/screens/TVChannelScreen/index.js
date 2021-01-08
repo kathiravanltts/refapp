@@ -67,28 +67,28 @@ export default class TVChannelScreen extends BaseScreen {
         rect: true,
         color: constants.CHLIST_CONTAINER_COLOR,
         alpha:0.9,
-        w: 1100,
-        h: 150,
-        x:700,
-        y:800,
+        w: constants.CHLIST_INFO_WIDTH,
+        h: constants.CHLIST_INFO_HEIGHT,
+        x:constants.CHLIST_INFO_X,
+        y:constants.CHLIST_INFO_Y,
         visible:false,
         ImageIcon: {
-          w:100,
-          h:100,
+          w:constants.CHLIST_INFO_IMAGE_WIDTH,
+          h:constants.CHLIST_INFO_IMAGE_HEIGHT,
           alpha:0.5,
           
         },
         RefIdTxt: {   
-          x:20,  
-          y:10,
+          x:constants.CHLIST_INFO_REF_ID_X,  
+          y:constants.CHLIST_INFO_REF_ID_Y,
           text: {
             fontSize: constants.CHLIST_INFO_FONTSIZE,           
           }
         },
         LocatorTxt: {   
-          x:20,
-          y:40,    
-          w:900,
+          x:constants.CHLIST_INFO_LOCATER_X,
+          y:constants.CHLIST_INFO_LOCATER_Y,    
+          w:constants.CHLIST_INFO_LOCATER_WIDTH,
           text: {
             fontSize: constants.CHLIST_INFO_FONTSIZE,
             wordWrap:true
@@ -121,7 +121,7 @@ export default class TVChannelScreen extends BaseScreen {
     this.tag('ChannelInfo').visible =true;
     this.tag('RefIdTxt').text="channelId : "+selectedItem.channelId
     this.tag('LocatorTxt').text="locator : "+selectedItem.locator
-    this.tag("ImageIcon").patch({src: Utils.asset(selectedItem.logo),x:900,y:20});
+    this.tag("ImageIcon").patch({src: Utils.asset(selectedItem.logo),x:constants.CHLIST_INFO_IMAGE_X,y:constants.CHLIST_INFO_IMAGE_Y});
     let timer = setTimeout(function(ref){
       ref.tag('ChannelInfo').visible =false;
       clearTimeout(timer);
