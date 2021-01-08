@@ -28,6 +28,7 @@ import CurrentTime from './components/CurrentTime'
 export default class App extends Lightning.Component {
   static _template() {
     return {
+  
       Splash: {
         type: SplashScreen,
         visible: false
@@ -43,6 +44,7 @@ export default class App extends Lightning.Component {
         type: CurrentTime,
         visible: true
       } 
+
     }
   }
 
@@ -58,7 +60,7 @@ export default class App extends Lightning.Component {
     var style = document.createElement('style')
     document.head.appendChild(style)
     style.sheet.insertRule(
-      '@media all { html {height: 100%; width: 100%;} *,body {margin:0; padding:0;} canvas { position: absolute; z-index: 2; } body { background-color:transparent; width: 100%; height: 100%;} }'
+      '@media all { html {height: 100%; width: 100%;} *,body {margin:0; padding:0;} canvas { position: absolute; z-index: 2; } body { background-color: 0xAAA000A9; width: 100%; height: 100%;} }'
     )
   }
 
@@ -70,6 +72,12 @@ export default class App extends Lightning.Component {
     await testIncreaseSplashVisibility
 
     this.patch({
+       Bg:{
+        rect: true,
+        color: 0xAAA000A9,
+        w: 1990,
+        h: 1000,
+      },
       Navbar: {
         type: Navbar,
         zIndex: 10
@@ -81,6 +89,7 @@ export default class App extends Lightning.Component {
         src: Utils.asset('cache/images/rdk-logo.png'),
         zIndex: 11
       }
+     
     })
 
     this._setState('Navbar')

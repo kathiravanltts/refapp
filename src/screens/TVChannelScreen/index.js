@@ -67,11 +67,17 @@ export default class TVChannelScreen extends BaseScreen {
         rect: true,
         color: constants.CHLIST_CONTAINER_COLOR,
         alpha:0.9,
-        w: 900,
+        w: 1100,
         h: 150,
-        x:800,
+        x:700,
         y:800,
         visible:false,
+        ImageIcon: {
+          w:100,
+          h:100,
+          alpha:0.5,
+          
+        },
         RefIdTxt: {   
           x:20,  
           y:10,
@@ -87,7 +93,9 @@ export default class TVChannelScreen extends BaseScreen {
             fontSize: constants.CHLIST_INFO_FONTSIZE,
             wordWrap:true
           }
-        }
+        },
+       
+        
       }
     }
   }
@@ -108,10 +116,12 @@ export default class TVChannelScreen extends BaseScreen {
 
   _handleEnter() {
     let selectedItem = this.tag('Lists').children[0].activeItem._item
+    console.log(selectedItem)
     this._play(selectedItem)
     this.tag('ChannelInfo').visible =true;
     this.tag('RefIdTxt').text="channelId : "+selectedItem.channelId
     this.tag('LocatorTxt').text="locator : "+selectedItem.locator
+    this.tag("ImageIcon").patch({src: Utils.asset(selectedItem.logo),x:900,y:20});
     let timer = setTimeout(function(ref){
       ref.tag('ChannelInfo').visible =false;
       clearTimeout(timer);
