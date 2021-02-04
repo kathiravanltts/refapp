@@ -25,6 +25,7 @@ import { channelsServiceInit, getChannel } from '@/services/ChannelsService'
 import TVChannelScreenList from './components/TVChannelScreenList'
 import BaseScreen from '../BaseScreen'
 import { getActiveScreen, navigateForward, navigateBackward, navigate } from './../../lib/Router'
+import { ChannelNumber } from '../../components/NumberInput/channelnumber.js'
 
 export default class TVChannelScreen extends BaseScreen {
   static _template() {
@@ -100,11 +101,18 @@ export default class TVChannelScreen extends BaseScreen {
     }
   }
 
+
+show(){
+  if(this.tag('Lists').children[0]){
+  this.tag('Lists').children[0].setIndex(ChannelNumber.currentIndex)
+  }
+  super.show();
+}
   
   _getFocused() {
     return this.activeList
   }
-
+ 
 
   _handleKey(key) {
     if (key.code === 'Backspace') {
@@ -127,8 +135,10 @@ export default class TVChannelScreen extends BaseScreen {
       clearTimeout(timer);
     },4000,this)
     // TODO
+    ChannelNumber.currentIndex = Number(selectedItem.channelNumber) - 1
+
     // if (selectedChannel) {
-      // this.signal('channelChanged', { selectedChannel })
+    //   this.signal('channelChanged', { selectedChannel })
     // }
   }
   
@@ -158,6 +168,7 @@ export default class TVChannelScreen extends BaseScreen {
     channelList.push(obj);
     this._index = 0
     this.tag('Lists').children = channelList;
+    this.tag('Lists').children[0].setIndex((ChannelNumber.currentIndex))
   }
 
   
